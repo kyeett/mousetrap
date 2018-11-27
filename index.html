@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+    <script>
+    
+    function updateText(text) {
+        $('#texter').html(text + " pressed");
+        id = '#'+text.replace("+","_")
+        $(id).addClass("active");
+
+        console.log(id);
+
+        $(id).stop().fadeTo( "fast" , 1, function() {
+            $(this).fadeTo("fast", 0.2, function() {            
+                $(this).removeClass("active");
+            });
+        });
+    }
+
+    $(document).ready(function() {
+
+        let commands = [
+            {cmd:'alt+x', fn:updateText},
+            {cmd:'z', fn:updateText},
+            {cmd:'x', fn:updateText},
+            {cmd:'c', fn:updateText},
+            {cmd:'ctrl+x', fn:updateText}
+        ];
+
+        $(commands).each(function(i, cmd) {
+            let c = cmd;
+            Mousetrap.bind(c.cmd, function() { 
+                c.fn(c.cmd); 
+            });
+        })
+
+
+    });
+    // single keys
+    </script>
+    <style>
+    
+    .highlighter  { 
+        opacity: 0.2
+    }
+
+    .highlighter.active  {
+        background-color: lightblue;
+    }
+    
+    </style>
+</head>
+<body>
+
+    <div class="highlighter" id="alt_x">alt+x</div>
+    <div class="highlighter" id="ctrl_x">ctrl+x</div>
+    <div class="highlighter" id="z">z</div>
+    <div class="highlighter" id="x">x</div>
+    <div class="highlighter" id="c">c</div>
+
+<br><br>
+    <div id="texter">&nbsp;</div>
+
+
+</body>
+</html>
